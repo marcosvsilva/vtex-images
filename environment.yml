@@ -14,4 +14,4 @@ dependencies:
   
   - urllib3=1.26
   - pip:
-    - uuid=1.30
+    - uuid==1.30
