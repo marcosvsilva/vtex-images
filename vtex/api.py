@@ -36,15 +36,18 @@ def upload_image_s3(path_image):
 
 def update_api(input_name, file_path, sku_id, is_main=False):
     if '.png' not in file_path:
-        print(r"{file_path}! is not valid .png image.")
-        return {}
+        print(r"{file_path} is not valid .png image.")
+        return 0
 
     if not os.path.exists(file_path):
         print(r"{file_path} not found.")
-        return {}
+        return 0
+
+    if "" in [STORE, ENVIRONMENT, APPKEY, APPTOKEN, S3_BUCKET]:
+        print(r".env is not valid.")
+        return 0
     
     path_upload = upload_image_s3(file_path)
-    print(path_upload)
 
     if path_upload:
         body = {
@@ -64,8 +67,8 @@ def update_api(input_name, file_path, sku_id, is_main=False):
         response = requests.request("POST", url, headers=headers, json=body)
 
         if response.status_code == 200:
-            print('SUCESS!')
+            print('The image was updated successfully!')
         else:
-            print("FAIL")
+            print("Fail to update the image!")
             print(response.status_code)
             print(response.content)
