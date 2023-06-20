@@ -8,14 +8,12 @@ base_url = f"https://{STORE}.{ENVIRONMENT}.com.br/api/catalog/pvt/stockkeepingun
 
 def generate_uuidv6():
     version = 6
-    uuidv6 = uuid.uuid4()  # Generate a Version 4 UUID
+    uuidv6 = uuid.uuid4()
 
-    # Replace the version field with 6
     uuidv6_int = int(uuidv6.hex, 16)
-    uuidv6_int &= ~(0xf000)  # Clear the version bits
-    uuidv6_int |= (version << 12)  # Set the version bits to 6
+    uuidv6_int &= ~(0xf000)
+    uuidv6_int |= (version << 12)
 
-    # Convert the modified integer back to a UUID string
     uuidv6_modified = uuid.UUID(int=uuidv6_int)
 
     return str(uuidv6_modified)
@@ -64,12 +62,10 @@ def update_api(input_name, file_path, sku_id, is_main=False):
 
         url = "{}/{}/file".format(base_url, sku_id)
         response = requests.request("POST", url, headers=headers, json=body)
-        print("Response Status Code:", response.status_code)
-        print("Response Content:", response.text)
 
         if response.status_code == 200:
             print('SUCESS!')
         else:
-            print("---------FAIL---------")
+            print("FAIL")
             print(response.status_code)
             print(response.content)
