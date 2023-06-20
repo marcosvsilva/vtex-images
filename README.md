@@ -1,2 +1,2 @@
 # vtex-images
-Service to update images on vtex api
+Service to update images in vtex api
