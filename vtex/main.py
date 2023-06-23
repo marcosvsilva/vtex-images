@@ -1,19 +1,41 @@
 import sys
 from dotenv import load_dotenv
-from api import update_api
+from api import run
+from messages import *
 
 load_dotenv()
 
 num_args = len(sys.argv)
 
-def main(args):
-    file_name, file_path, sku_id = args
+def split_arguments(args):
+    op, new_args = '0', []
+    if not args:
+        show_help_message()
 
-    update_api(file_name, file_path, sku_id, True)
+        
+    if len(args) > 0:    
+        option = args[0]
+        
+        if option in ['-h', '--help']:
+            show_help_message()
+        else:
+            if option in ['-i', '--insert', '-u', '--update', '-d', '--delete']:
+                action = [c for c in option if c != '-'][0]
+
+                if len(args) not in [3, 4]:
+                    show_params_not_valid(action)
+                else:
+                    return action, args[1:]
+            else:
+                show_command_not_valid(option)
+        
+    return op, new_args
+
+def main(args):
+    op, args = split_arguments(args)
+    if op in ['i', 'u', 'd']:
+        run(op, args)
 
 if __name__ == '__main__':
     args = sys.argv[1:]
-    if len(args) != 3:
-        print(r"No arguments provided! Please provide {file_name}, {file_path} and {sku_id}.")
-        sys.exit(1)
     main(args)
