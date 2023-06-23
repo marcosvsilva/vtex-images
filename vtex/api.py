@@ -29,7 +29,7 @@ def upload_image_s3(path_image):
         s3 = boto3.client('s3')
         file_id = generate_uuidv6()
         try:
-            type_file = path_image.split("/")[-1].split(".")[-1]
+            type_file = os.path.basename(path_image).split(".")[-1]
             key = 'images/{}.{}'.format(file_id, type_file)
             s3.upload_file(path_image, S3_BUCKET, key)
             s3_public_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{key}"
@@ -60,7 +60,7 @@ def insert_update_api(args, update=False, is_main=True):
     if not path_upload:
         log_error('Fail to upload image to S3 bucket.', SKU_ID)
 
-    file_name = path_file.split('/')[-1].split('.')[0]
+    file_name = os.path.basename(path_file).split(".")[0]
     body = {
         'IsMain': is_main,
         'Label': '',
