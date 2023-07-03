@@ -1,11 +1,6 @@
 import sys
-from dotenv import load_dotenv
-from api import run
-from messages import *
-
-load_dotenv()
-
-num_args = len(sys.argv)
+from vtex.api import run
+from vtex.messages import *
 
 def split_arguments(args):
     op, new_args = '0', []
