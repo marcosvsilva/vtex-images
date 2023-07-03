@@ -2,9 +2,9 @@ import os
 import requests
 import boto3
 import uuid
-from config import STORE, ENVIRONMENT, APPKEY, APPTOKEN, S3_BUCKET
-from messages import show_command_not_valid, show_env_not_valid, show_params_not_valid
-from log import log_error, log_response
+from vtex.config import STORE, ENVIRONMENT, APPKEY, APPTOKEN, S3_BUCKET
+from vtex.messages import show_command_not_valid, show_env_not_valid, show_params_not_valid
+from vtex.log import log_error, log_response
 
 BASE_URL = f"https://{STORE}.{ENVIRONMENT}.com.br/api/catalog/pvt/stockkeepingunit"
 
